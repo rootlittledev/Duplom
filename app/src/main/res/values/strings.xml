@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Duplom</string>
+    <string name="app_name">O-Shop</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -16,4 +16,12 @@
     <string name="tag_1">Tag 1</string>
     <string name="tag_2">Tag 2</string>
     <string name="tag_3">Tag_3</string>
+    <string name="all_items">All items</string>
+    <string name="clothes">Clothes</string>
+    <string name="accessories">Accessories</string>
+    <string name="shoes">Shoes</string>
+    <string name="basket">Basket</string>
+    <string name="profile">Profile</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
 </resources>

@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity
         ViewFlipper newest = (ViewFlipper) findViewById(R.id.main_new);
         ViewFlipper recommended = (ViewFlipper) findViewById(R.id.main_recommended);
         Database database = new Database(this);
-        database.onUpgrade(database.getWritableDatabase(),1,2);
         database.insertItem(R.drawable.blazer, "Чоловічий блейзер", "UAH", 5, 800, "Clothes", "Men", "Adult", "Outerwear", "Summer", "Descripion");
         Cursor newestCursor = database.getNewest();
         Cursor recommendedCursor = database.getRecommended();
@@ -106,17 +105,17 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.all_items) {
             startActivity(new Intent(MainActivity.this, ItemActivity.class));
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_clothes) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_accessories) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_shoes) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_basket) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_profile) {
 
         }
 
@@ -127,26 +126,24 @@ public class MainActivity extends AppCompatActivity
 
     void addNew(ViewFlipper newFlipper, final Cursor data){
 
+        int index = 0;
+        Log.i("debug",data.getCount() + " ");
+        data.moveToFirst();
 
-
-        while (data.moveToNext()){
+        while (index < data.getCount()){
             LinearLayout containerLayout = new LinearLayout(this);
             LinearLayout newLayout = new LinearLayout(this);
             LinearLayout newTextLayout = new LinearLayout(this);
-            Log.i("debug","while1");
-            int index = 1;
-            for (int i = 0; i < 3 && index<=data.getCount(); i++){
-                Log.i("debug","while2");
-                if (data.getCount()>0)
-                    Log.i("debug",">");
-                else
-                    Log.i("debug","<");
+
+            for (int i = 0; i < 3 && index < data.getCount(); i++){
+                Log.i("debug", index + " index ");
                 ImageButton newButton = new ImageButton(this);
                 TextView newText = new TextView(this);
                 LinearLayout.LayoutParams bParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 LinearLayout.LayoutParams tParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 float density =  this.getResources().getDisplayMetrics().density;
                 id = data.getInt(0);
+                Log.i("debug", id+ " id ");
                 bParams.setMarginEnd((int) Math.ceil(10 * density));
                 bParams.width = (int) Math.ceil(100 * density);
                 bParams.height = (int) Math.ceil(100 * density);
