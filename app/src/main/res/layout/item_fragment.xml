@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true">
+
+
+    <ImageButton
+        android:id="@+id/item_image"
+        android:layout_width="120dp"
+        android:layout_height="160dp"
+        android:layout_margin="10dp"
+        android:contentDescription="@string/item_image" />
+    <TextView
+        android:id="@+id/item_label"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/item_image"/>
+
+    <ImageButton
+        android:id="@+id/item_subtract"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/item_label"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/item_image"
+        android:background="@color/colorWhite"
+        android:contentDescription="@string/item_subtract"
+        android:scaleType="fitXY"
+        android:src="@drawable/minus" />
+    <EditText
+        android:id="@+id/item_amount"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/item_subtract"
+        android:layout_below="@id/item_label"
+        android:inputType="number"
+        />
+
+    <ImageButton
+        android:id="@+id/item_add"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/item_label"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/item_amount"
+        android:contentDescription="@string/item_subtract"
+        android:scaleType="fitXY"
+        android:background="@color/colorWhite"
+        android:src="@drawable/plus" />
+    <TextView
+        android:id="@+id/item_cost"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/item_image"
+        android:layout_below="@id/item_subtract" />
+    <TextView
+        android:id="@+id/item_currency"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/item_cost"
+        android:layout_below="@id/item_subtract"/>
+    <Button
+        android:id="@+id/item_order"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/item_image"
+        android:text="@string/order"/>
+</RelativeLayout>
