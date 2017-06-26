@@ -1,17 +1,13 @@
 package com.android.littledev.duplom;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,34 +16,28 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class SearchActivity extends AppCompatActivity
+public class BasketActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    ViewPager viewPager;
+    float end_sum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_basket);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        viewPager = (ViewPager) findViewById(R.id.search_pager);
-        viewPager.setAdapter(new CustomAdapter(getSupportFragmentManager()));
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        end_sum = 0;
+        add_item();
+        Log.i("debug", ""+end_sum);
+        TextView end = (TextView) findViewById(R.id.to_pay);
+        end.setText(Float.toString(end_sum));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -58,6 +48,7 @@ public class SearchActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -91,24 +82,42 @@ public class SearchActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.all_items) {
-            startActivity(new Intent(SearchActivity.this, ItemActivity.class));
+        if (id == R.id.nav_main){
+            if(!this.getClass().getName().equals(MainActivity.class.getName()))
+                startActivity(new Intent(this, MainActivity.class));
+        }
+        else if (id == R.id.nav_search){
+            if(!this.getClass().getName().equals(SearchActivity.class.getName()))
+                startActivity(new Intent(this, SearchActivity.class));
+        }
+        else if (id == R.id.all_items) {
+            ItemActivity.narrow = "none";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_clothes) {
-
+            ItemActivity.narrow = "Clothes";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_accessories) {
-
+            ItemActivity.narrow = "Accessories";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_shoes) {
-
+            ItemActivity.narrow = "Shoes";
+            startActivity(new Intent(this, ItemActivity.class));
+        } else if (id == R.id.nav_hats) {
+            ItemActivity.narrow = "Hats";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_basket) {
-
+            if(!this.getClass().getName().equals(BasketActivity.class.getName())) {
+                startActivity(new Intent(this, BasketActivity.class));
+            }
         } else if (id == R.id.nav_profile) {
-
+            if(!this.getClass().getName().equals(BasketActivity.class.getName())) {
+                startActivity(new Intent(this, BasketActivity.class));
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -116,37 +125,29 @@ public class SearchActivity extends AppCompatActivity
         return true;
     }
 
-    private class CustomAdapter extends FragmentPagerAdapter {
 
-        private String fragments [] = {"SearchCategoryFragment", "SearchSeasonFragment", "SearchTypeFragment"};
+    void addToSum(float number){
+        end_sum+=number;
+    }
 
-        CustomAdapter(FragmentManager supportFragmentManager) {
-            super(supportFragmentManager);
+    void add_item(){
+        Log.i("debug", "add");
+        Database database = new Database(this);
+        Cursor cursor =  database.getOrders();
+        LinearLayout layout = (LinearLayout)findViewById(R.id.basket_container);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (cursor.moveToFirst()) {
+            do {
+                Cursor cursor1 = database.getItemLong(cursor.getInt(0));
+                cursor1.moveToFirst();
+                FrameLayout frame = new FrameLayout(this);
+                int id = View.generateViewId();
+                frame.setId(id);
+                layout.addView(frame);
+                Fragment basketFragment = BasketFragment.newInstance(cursor1.getInt(0), cursor1.getInt(1), cursor1.getString(2), cursor1.getString(3), cursor.getInt(1), cursor1.getFloat(5));
+                ft.add(id, basketFragment);
+            } while (cursor.moveToNext());
         }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position){
-                case 0:
-                    return new SearchCategoryFragment();
-                case 1:
-                    return new SearchSeasonFragment();
-                case 2:
-                    return new SearchTypeFragment();
-                default:
-                    return new SearchTypeFragment();
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.length;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return fragments[position];
-        }
+        ft.commit();
     }
 }
-

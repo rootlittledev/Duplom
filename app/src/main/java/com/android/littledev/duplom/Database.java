@@ -22,7 +22,7 @@ class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_NAME_1 +" ( ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT)");
         db.execSQL("create table " + TABLE_NAME_2 +" ( ID INTEGER PRIMARY KEY AUTOINCREMENT, Image_source INT, Item_name TEXT, Currency TEXT, Amount INT, Cost_per_item FLOAT, Discount INT, View INT, Time DATETIME)");
-        db.execSQL("create table " + TABLE_NAME_3 +" ( ID INTEGER PRIMARY KEY AUTOINCREMENT, Image_source INT, Item_name TEXT, Currency TEXT, Amount INT, Cost_per_item FLOAT, Tag_1 TEXT, Tag_2 TEXT, Tag_3 TEXT, Tag_4 TEXT, Tag_5 TEXT, Description TEXT, Discount INT, View INT, Time DATETIME)");
+        db.execSQL("create table " + TABLE_NAME_3 +" ( ID INTEGER PRIMARY KEY AUTOINCREMENT, Image_source INT, Item_name TEXT, Currency TEXT, Amount INT, Cost_per_item FLOAT, Discount INT, View INT, Time DATETIME, Tag_1 TEXT, Tag_2 TEXT, Tag_3 TEXT, Tag_4 TEXT, Tag_5 TEXT, Description TEXT)");
         db.execSQL("create table " + TABLE_NAME_4 +" ( Item_id INT, Amount INT)");
     }
 
@@ -72,9 +72,15 @@ class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("Select * From " + TABLE_NAME_1, null);
     }
-    Cursor getItemShort(){
+    Cursor getItemShort(String narrow){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("Select * From " + TABLE_NAME_2, null);
+        Cursor cursor;
+        Log.i("debug", narrow);
+        if (narrow.equals("none"))
+            cursor = db.rawQuery("Select * From " + TABLE_NAME_3, null);
+        else
+            cursor =  db.rawQuery("Select * From " + TABLE_NAME_3 + " Where Tag_1 = '" + narrow + "'", null);
+        return cursor;
     }
     Cursor getItemLong(int id){
         SQLiteDatabase db = this.getWritableDatabase();

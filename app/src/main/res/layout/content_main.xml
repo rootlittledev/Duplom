@@ -60,44 +60,6 @@
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:text="Сезони"/>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/main_seasons_label"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp">
-            <ImageButton
-                android:id="@+id/season_1"
-                android:layout_width="160dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:src="@drawable/summer"/>
-            <ImageButton
-                android:id="@+id/season_2"
-                android:layout_width="160dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:layout_toEndOf="@id/season_1"
-                android:src="@drawable/autumn"/>
-            <ImageButton
-                android:id="@+id/season_3"
-                android:layout_width="160dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:layout_below="@id/season_1"
-                android:src="@drawable/winter"/>
-            <ImageButton
-                android:id="@+id/season_4"
-                android:layout_width="160dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:layout_toEndOf="@id/season_3"
-                android:layout_below="@id/season_2"
-                android:src="@drawable/spring"/>
-        </RelativeLayout>
-
-
-
     </RelativeLayout>
 
 </ScrollView>

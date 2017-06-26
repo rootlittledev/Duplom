@@ -21,13 +21,17 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/all_items" />
         <item
-            android:id="@+id/nav_clothes"
-            android:icon="@drawable/clothes"
-            android:title="@string/clothes" />
+            android:id="@+id/nav_hats"
+            android:icon="@drawable/hat"
+            android:title="@string/hats" />
         <item
             android:id="@+id/nav_accessories"
             android:icon="@drawable/accessories"
             android:title="@string/accessories" />
+        <item
+            android:id="@+id/nav_clothes"
+            android:icon="@drawable/clothes"
+            android:title="@string/clothes" />
         <item
             android:id="@+id/nav_shoes"
             android:icon="@drawable/shoes"

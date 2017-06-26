@@ -13,34 +13,35 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal">
         <ImageButton
-            android:id="@+id/season_1"
-            android:layout_width="160dp"
-            android:layout_height="100dp"
+            android:id="@+id/summer"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_margin="5dp"
             android:src="@drawable/summer"/>
         <ImageButton
-            android:id="@+id/season_2"
-            android:layout_width="160dp"
-            android:layout_height="100dp"
+            android:id="@+id/anthem"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_margin="5dp"
-            android:layout_toEndOf="@id/season_1"
+            android:layout_toEndOf="@id/summer"
             android:src="@drawable/autumn"/>
         <ImageButton
-            android:id="@+id/season_3"
-            android:layout_width="160dp"
-            android:layout_height="100dp"
+            android:id="@+id/winter"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_margin="5dp"
-            android:layout_below="@id/season_1"
+            android:layout_below="@id/anthem"
             android:src="@drawable/winter"/>
         <ImageButton
-            android:id="@+id/season_4"
-            android:layout_width="160dp"
-            android:layout_height="100dp"
+            android:id="@+id/spring"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_margin="5dp"
-            android:layout_toEndOf="@id/season_3"
-            android:layout_below="@id/season_2"
+            android:layout_toEndOf="@id/winter"
+            android:layout_below="@id/anthem"
             android:src="@drawable/spring"/>
     </RelativeLayout>
     <EditText
@@ -48,11 +49,11 @@
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
+        android:inputType="text"
         android:hint="Search"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-
         android:text="Search"/>
 </LinearLayout>

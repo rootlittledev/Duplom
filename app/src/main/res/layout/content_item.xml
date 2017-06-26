@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +7,30 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.android.littledev.duplom.ItemActivity"
     tools:showIn="@layout/activity_item">
-
+<RelativeLayout
+    android:id="@+id/search_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true">
+    <EditText
+        android:id="@+id/search_line"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:inputType="text"
+        android:layout_marginBottom="5dp"/>
+    <ImageButton
+        android:layout_centerVertical="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@id/search_line"
+        android:src="@drawable/search"
+        android:background="@color/colorWhite"/>
+</RelativeLayout>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/search_layout">
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="wrap_content"
@@ -15,5 +38,7 @@
         android:orientation="vertical">
 
     </LinearLayout>
-
 </ScrollView>
+
+
+</RelativeLayout>

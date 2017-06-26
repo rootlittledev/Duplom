@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,15 +28,18 @@ import android.widget.ViewFlipper;
 public class ItemActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    String[] tags;
+    public static String narrow;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        Database database = new Database(this);
+        Log.i("debug", "narrow");
         add_item();
-
+        tags = new String[3];
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,9 +116,20 @@ public class ItemActivity extends AppCompatActivity
         return true;
     }
 
+    public void setCategoryTag(String categoryTag){
+        tags[0] = categoryTag;
+    }
+    public void setTypeTag(String typeTag){
+        tags[1] = typeTag;
+    }
+    public void setSeasonTag(String seasonTag){
+        tags[2] = seasonTag;
+    }
+
+
     void add_item(){
         Database database = new Database(this);
-        Cursor cursor =  database.getItemShort();
+        Cursor cursor =  database.getItemShort(narrow);
         LinearLayout layout = (LinearLayout)findViewById(R.id.container);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if (cursor.moveToFirst()) {

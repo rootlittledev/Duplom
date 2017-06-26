@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    private int id;
+    PuzzlePieces puzzle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +34,18 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         ViewFlipper newest = (ViewFlipper) findViewById(R.id.main_new);
         ViewFlipper recommended = (ViewFlipper) findViewById(R.id.main_recommended);
         Database database = new Database(this);
+        database.onUpgrade(database.getWritableDatabase(), 0,1);
         database.insertItem(R.drawable.blazer, "Чоловічий блейзер", "UAH", 5, 800, "Clothes", "Men", "Adult", "Outerwear", "Summer", "Descripion");
+        database.insertItem(R.drawable.suit, "Чоловічий костюм", "UAH", 5, 800, "Clothes", "Men", "Adult", "Outerwear", "Summer", "Descripion");
+        database.insertItem(R.drawable.jacket, "Чоловічий піджак", "UAH", 5, 800, "Clothes", "Men", "Adult", "Outerwear", "Summer", "Descripion");
+        database.insertItem(R.drawable.jacket_2, "Чоловічий піджак", "UAH", 5, 800, "Clothes", "Men", "Adult", "Outerwear", "Summer", "Descripion");
+        database.insertItem(R.drawable.hat, "Шапка", "UAH", 5, 800, "Hats", "Men", "Adult", "Outerwear", "Summer", "Descripion");
+        database.insertItem(R.drawable.accessories_big, "Окуляри", "UAH", 5, 800, "Accessories", "Men", "Adult", "Outerwear", "Summer", "Descripion");
+        database.insertItem(R.drawable.shoes_big, "капці", "UAH", 5, 800, "Shoes", "Men", "Adult", "Outerwear", "Summer", "Descripion");
         Cursor newestCursor = database.getNewest();
         Cursor recommendedCursor = database.getRecommended();
         addNew(newest, newestCursor);
@@ -52,8 +60,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(MainActivity.this, BasketActivity.class));
             }
         });
 
@@ -103,24 +110,36 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        ItemActivity itemActivity = new ItemActivity();
         int id = item.getItemId();
 
         if (id == R.id.nav_main){
-
+            if(!this.getClass().getName().equals(MainActivity.class.getName()))
+                startActivity(new Intent(this, MainActivity.class));
         }
         else if (id == R.id.nav_search){
-            startActivity(new Intent(MainActivity.this, SearchActivity.class));
+            if(!this.getClass().getName().equals(SearchActivity.class.getName()))
+                startActivity(new Intent(this, SearchActivity.class));
         }
         else if (id == R.id.all_items) {
-            startActivity(new Intent(MainActivity.this, ItemActivity.class));
+            ItemActivity.narrow = "none";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_clothes) {
-
+            ItemActivity.narrow = "Clothes";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_accessories) {
-
+            ItemActivity.narrow = "Accessories";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_shoes) {
-
+            ItemActivity.narrow = "Shoes";
+            startActivity(new Intent(this, ItemActivity.class));
+        } else if (id == R.id.nav_hats) {
+            ItemActivity.narrow = "Hats";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_basket) {
-
+            if(!this.getClass().getName().equals(BasketActivity.class.getName())) {
+                startActivity(new Intent(this, BasketActivity.class));
+            }
         } else if (id == R.id.nav_profile) {
 
         }
@@ -142,14 +161,12 @@ public class MainActivity extends AppCompatActivity
             LinearLayout newTextLayout = new LinearLayout(this);
 
             for (int i = 0; i < 3 && index < data.getCount(); i++){
-                Log.i("debug", index + " index ");
                 ImageButton newButton = new ImageButton(this);
                 TextView newText = new TextView(this);
                 LinearLayout.LayoutParams bParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 LinearLayout.LayoutParams tParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 float density =  this.getResources().getDisplayMetrics().density;
-                id = data.getInt(0);
-                Log.i("debug", id+ " id ");
+                newButton.setTag(data.getInt(0));
                 bParams.setMarginEnd((int) Math.ceil(10 * density));
                 bParams.width = (int) Math.ceil(100 * density);
                 bParams.height = (int) Math.ceil(100 * density);
@@ -160,7 +177,7 @@ public class MainActivity extends AppCompatActivity
                     public void onClick(View v) {
                         Intent intent = new Intent(MainActivity.this, ItemInfo.class);
                         Bundle bundle = new Bundle();
-                        bundle.putInt("id",id);
+                        bundle.putInt("id",(Integer) v.getTag());
                         intent.putExtras(bundle);
                         startActivity(intent);
 

@@ -24,4 +24,7 @@
     <string name="profile">Profile</string>
     <string name="home">Home</string>
     <string name="search">Search</string>
+    <string name="hat">Hat</string>
+    <string name="hats">Hats</string>
+    <string name="measurement">pcs.</string>
 </resources>
