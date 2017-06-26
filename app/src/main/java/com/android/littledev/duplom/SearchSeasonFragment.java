@@ -8,9 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-/**
- * Created by LittleDev on 22-Jun-17.
- */
 
 public class SearchSeasonFragment extends Fragment {
 

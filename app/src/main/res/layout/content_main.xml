@@ -52,14 +52,6 @@
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true">
         </ViewFlipper>
-        <TextView
-            android:id="@+id/main_seasons_label"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_below="@id/main_recommended"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
-            android:text="Сезони"/>
     </RelativeLayout>
 
 </ScrollView>

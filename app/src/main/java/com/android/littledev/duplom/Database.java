@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 class Database extends SQLiteOpenHelper {
 
@@ -44,14 +43,23 @@ class Database extends SQLiteOpenHelper {
 
     void onAddOrder(int id, int amount){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("Insert into " + TABLE_NAME_4 + " (Item_id, Amount) Values ('" + id + "', '" + amount + "')");
+        Cursor cursor = db.rawQuery("Select * From " + TABLE_NAME_4 + " Where Item_id = " + id, null);
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0)
+        {
+            int newAmount = cursor.getInt(1) + amount;
+            db.execSQL("Update " + TABLE_NAME_4 + " Set Amount = " + newAmount);
+            cursor.close();
+        }
+        else
+            db.execSQL("Insert into " + TABLE_NAME_4 + " (Item_id, Amount) Values (" + id + ", " + amount + ")");
     }
 
-    void addViews(int id, int views){
+    /*void addViews(int id, int views){
         SQLiteDatabase db = this.getWritableDatabase();
         views++;
         db.execSQL("Insert into " + TABLE_NAME_2 + " Where id = '" + id + "' (View) Values ('" + views + "')");
-    }
+    }*/
 
     Cursor getOrders(){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -68,14 +76,14 @@ class Database extends SQLiteOpenHelper {
         return db.rawQuery("Select ID, Image_source, Item_name From " + TABLE_NAME_2 + " Order By View Desc Limit 9", null);
     }
 
-    Cursor getItems(){
+   /* Cursor getItems(){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("Select * From " + TABLE_NAME_1, null);
-    }
+    }*/
+
     Cursor getItemShort(String narrow){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor;
-        Log.i("debug", narrow);
         if (narrow.equals("none"))
             cursor = db.rawQuery("Select * From " + TABLE_NAME_3, null);
         else
@@ -85,7 +93,6 @@ class Database extends SQLiteOpenHelper {
     Cursor getItemLong(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "Select * From " + TABLE_NAME_3 + " Where ID = " + id;
-        Log.i("test", query);
         return db.rawQuery(query, null);
     }
 }

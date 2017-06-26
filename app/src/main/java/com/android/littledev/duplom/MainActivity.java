@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    PuzzlePieces puzzle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +42,11 @@ public class MainActivity extends AppCompatActivity
         database.insertItem(R.drawable.suit, "Чоловічий костюм", "UAH", 5, 800, "Clothes", "Men", "Adult", "Outerwear", "Summer", "Descripion");
         database.insertItem(R.drawable.jacket, "Чоловічий піджак", "UAH", 5, 800, "Clothes", "Men", "Adult", "Outerwear", "Summer", "Descripion");
         database.insertItem(R.drawable.jacket_2, "Чоловічий піджак", "UAH", 5, 800, "Clothes", "Men", "Adult", "Outerwear", "Summer", "Descripion");
-        database.insertItem(R.drawable.hat, "Шапка", "UAH", 5, 800, "Hats", "Men", "Adult", "Outerwear", "Summer", "Descripion");
-        database.insertItem(R.drawable.accessories_big, "Окуляри", "UAH", 5, 800, "Accessories", "Men", "Adult", "Outerwear", "Summer", "Descripion");
-        database.insertItem(R.drawable.shoes_big, "капці", "UAH", 5, 800, "Shoes", "Men", "Adult", "Outerwear", "Summer", "Descripion");
+        database.insertItem(R.drawable.svitshot_1, "Жіночий світшот", "UAH", 5, 800, "Clothes", "Woman", "Adult", "Outerwear", "Summer", "Descripion");
+        database.insertItem(R.drawable.hat_1, "Шапка", "UAH", 5, 800, "Hats", "Men", "Adult", "Outerwear", "Summer", "Descripion");
+        database.insertItem(R.drawable.accessories_2, "Жіночі окуляри", "UAH", 5, 800, "Accessories", "Woman", "Adult", "Outerwear", "Summer", "Descripion");
+        database.insertItem(R.drawable.accessorie_1, "Брелок", "UAH", 5, 800, "Accessories", "Woman", "Adult", "Outerwear", "Summer", "Descripion");
+        database.insertItem(R.drawable.shoes_1, "Капці", "UAH", 5, 800, "Shoes", "Men", "Adult", "Outerwear", "Summer", "Descripion");
         Cursor newestCursor = database.getNewest();
         Cursor recommendedCursor = database.getRecommended();
         addNew(newest, newestCursor);
@@ -110,7 +111,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        ItemActivity itemActivity = new ItemActivity();
         int id = item.getItemId();
 
         if (id == R.id.nav_main){
@@ -152,7 +152,6 @@ public class MainActivity extends AppCompatActivity
     void addNew(ViewFlipper newFlipper, final Cursor data){
 
         int index = 0;
-        Log.i("debug",data.getCount() + " ");
         data.moveToFirst();
 
         while (index < data.getCount()){

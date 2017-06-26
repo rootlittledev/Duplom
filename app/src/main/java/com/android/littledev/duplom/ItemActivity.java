@@ -13,17 +13,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ViewFlipper;
 
-/**
- * Created by LittleDev on 21-Jun-17.
- */
+
 
 public class ItemActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,15 +33,13 @@ public class ItemActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        Log.i("debug", "narrow");
         add_item();
         tags = new String[3];
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(ItemActivity.this, BasketActivity.class));
             }
         });
 
@@ -97,16 +91,33 @@ public class ItemActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.all_items) {
-            startActivity(new Intent(ItemActivity.this, ItemActivity.class));
+        if (id == R.id.nav_main){
+            if(!this.getClass().getName().equals(MainActivity.class.getName()))
+                startActivity(new Intent(this, MainActivity.class));
+        }
+        else if (id == R.id.nav_search){
+            if(!this.getClass().getName().equals(SearchActivity.class.getName()))
+                startActivity(new Intent(this, SearchActivity.class));
+        }
+        else if (id == R.id.all_items) {
+            ItemActivity.narrow = "none";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_clothes) {
-
+            ItemActivity.narrow = "Clothes";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_accessories) {
-
+            ItemActivity.narrow = "Accessories";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_shoes) {
-
+            ItemActivity.narrow = "Shoes";
+            startActivity(new Intent(this, ItemActivity.class));
+        } else if (id == R.id.nav_hats) {
+            ItemActivity.narrow = "Hats";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_basket) {
-
+            if(!this.getClass().getName().equals(BasketActivity.class.getName())) {
+                startActivity(new Intent(this, BasketActivity.class));
+            }
         } else if (id == R.id.nav_profile) {
 
         }

@@ -19,15 +19,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
- * Created by LittleDev on 22-Jun-17.
- */
 
 public class ItemInfo extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private int amount;
-    private float cost_per_item;
 
 
     @Override
@@ -49,14 +43,10 @@ public class ItemInfo extends AppCompatActivity
         TextView item_publisher = (TextView) this.findViewById(R.id.tag_3);
         TextView item_description = (TextView) this.findViewById(R.id.description);
 
-
-        this.cost_per_item = cost_per_item;
-
         cursor.moveToFirst();
         item_image.setImageResource(cursor.getInt(1));
         item_label.setText(cursor.getString(2));
         item_currency.setText(cursor.getString(3));
-        this.amount = cursor.getInt(4);
         item_amount.setText("1");
         item_cost.setText(Float.toString(cursor.getFloat(5)));
         item_year.setText(cursor.getString(6));
@@ -67,8 +57,7 @@ public class ItemInfo extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(ItemInfo.this, BasketActivity.class));
             }
         });
 
@@ -120,16 +109,33 @@ public class ItemInfo extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.all_items) {
-            startActivity(new Intent(ItemInfo.this, ItemActivity.class));
+        if (id == R.id.nav_main){
+            if(!this.getClass().getName().equals(MainActivity.class.getName()))
+                startActivity(new Intent(this, MainActivity.class));
+        }
+        else if (id == R.id.nav_search){
+            if(!this.getClass().getName().equals(SearchActivity.class.getName()))
+                startActivity(new Intent(this, SearchActivity.class));
+        }
+        else if (id == R.id.all_items) {
+            ItemActivity.narrow = "none";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_clothes) {
-
+            ItemActivity.narrow = "Clothes";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_accessories) {
-
+            ItemActivity.narrow = "Accessories";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_shoes) {
-
+            ItemActivity.narrow = "Shoes";
+            startActivity(new Intent(this, ItemActivity.class));
+        } else if (id == R.id.nav_hats) {
+            ItemActivity.narrow = "Hats";
+            startActivity(new Intent(this, ItemActivity.class));
         } else if (id == R.id.nav_basket) {
-
+            if(!this.getClass().getName().equals(BasketActivity.class.getName())) {
+                startActivity(new Intent(this, BasketActivity.class));
+            }
         } else if (id == R.id.nav_profile) {
 
         }

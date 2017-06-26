@@ -3,7 +3,6 @@ package com.android.littledev.duplom;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +33,7 @@ public class BasketActivity extends AppCompatActivity
 
         end_sum = 0;
         add_item();
-        Log.i("debug", ""+end_sum);
+
         TextView end = (TextView) findViewById(R.id.to_pay);
         end.setText(Float.toString(end_sum));
 
@@ -126,12 +124,7 @@ public class BasketActivity extends AppCompatActivity
     }
 
 
-    void addToSum(float number){
-        end_sum+=number;
-    }
-
     void add_item(){
-        Log.i("debug", "add");
         Database database = new Database(this);
         Cursor cursor =  database.getOrders();
         LinearLayout layout = (LinearLayout)findViewById(R.id.basket_container);
@@ -144,6 +137,7 @@ public class BasketActivity extends AppCompatActivity
                 int id = View.generateViewId();
                 frame.setId(id);
                 layout.addView(frame);
+                end_sum += cursor.getInt(1) * cursor1.getFloat(5);
                 Fragment basketFragment = BasketFragment.newInstance(cursor1.getInt(0), cursor1.getInt(1), cursor1.getString(2), cursor1.getString(3), cursor.getInt(1), cursor1.getFloat(5));
                 ft.add(id, basketFragment);
             } while (cursor.moveToNext());
